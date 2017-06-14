@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import image from '../../../assets/profile.jpg';
+
 const Comment = props => (
   <div className="comment">
     <a className="avatar">
-      <img alt="profile" src="/images/avatar/small/matt.jpg" />
+      <img alt="profile" src={image} />
     </a>
     <div className="content">
       <a className="author">Alexis</a>
