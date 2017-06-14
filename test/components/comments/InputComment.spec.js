@@ -14,36 +14,45 @@ const shallowSetup = props => shallow(<InputComment {...handleProps(props)} />);
 const mountSetup = props => mount(<InputComment {...handleProps(props)} />);
 
 describe('InputComment', () => {
-  const testComment = 'Test Comment';
+  const TEST_COMMENT = 'Test Comment';
 
   it('should render a textarea', () => {
-    expect(shallowSetup().find('textarea').exists()).toBeTruthy();
+    expect(shallowSetup().find('textarea').first().exists()).toBeTruthy();
   });
 
   it('should have a button', () => {
-    expect(shallowSetup().find('button').exists()).toBeTruthy();
+    expect(shallowSetup().find('button').first().exists()).toBeTruthy();
   });
 
   it('should accept an input', () => {
     const wrapper = mountSetup();
     const textarea = wrapper.find('textarea');
 
-    textarea.simulate('change', { target: { value: testComment } });
+    textarea.simulate('change', { target: { value: TEST_COMMENT } });
 
-    expect(wrapper.state('comment')).toEqual(testComment);
-    expect(textarea.prop('value')).toEqual(testComment);
+    expect(wrapper.state('comment')).toEqual(TEST_COMMENT);
+    expect(textarea.prop('value')).toEqual(TEST_COMMENT);
   });
 
-  describe('when the user submit the form', () => {
-    it('should call on submit when button is clicked', () => {
-      const onSubmit = jasmine.createSpy('onSubmit');
-      const wrapper = mountSetup({ onSubmit });
-      wrapper.setState({ comment: testComment });
+  describe('when the user submits the form', () => {
+    let wrapper;
+    let button;
+    let onSubmit;
 
-      const button = wrapper.find('button');
+    beforeEach(() => {
+      onSubmit = jasmine.createSpy('onSubmit');
+      wrapper = mountSetup({ onSubmit });
+      button = wrapper.find('button');
+      wrapper.setState({ comment: TEST_COMMENT });
       button.simulate('submit');
+    });
 
-      expect(onSubmit).toHaveBeenCalledWith(testComment);
+    it('should call on submit when button is clicked and return a comment', () => {
+      expect(onSubmit).toHaveBeenCalledWith(TEST_COMMENT);
+    });
+
+    it('should clear the input after submit', () => {
+      expect(wrapper.state('comment')).toEqual('');
     });
   });
 });

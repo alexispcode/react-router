@@ -18,14 +18,24 @@ class InputComment extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.onSubmit(this.state.comment);
+    this.setState({ comment: '' });
   }
 
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <textarea value={this.state.comment} onChange={this.setComment} />
-          <button type="submit">Add Replay</button>
+        <form onSubmit={this.handleSubmit} className="ui replay form">
+          <div className="field">
+            <textarea
+              value={this.state.comment}
+              onChange={this.setComment}
+              placeholder="Add a comment..."
+              rows="4"
+            />
+          </div>
+          <button type="submit" className="ui blue labeled submit icon button">
+            <i className="icon edit" /> Send
+          </button>
         </form>
       </div>
     );

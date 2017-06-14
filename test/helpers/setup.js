@@ -3,15 +3,14 @@ import { shallow, mount } from 'enzyme';
 
 const handleProps = (overridesProps) => {
   const props = Object.assign({
-    onSubmit: () => {}
   }, overridesProps);
 
   return props;
 };
 
-export function shallowSetup(props) {
-  return shallow(<InputComment {...handleProps(props)} />);
+export function shallowSetup(Component, props) {
+  return shallow(<Component {...handleProps(props)} />);
 }
-export function mountSetup(props) {
-  return mount(<InputComment {...handleProps(props)} />);
+export function mountSetup(Component, props) {
+  return mount(<Component {...handleProps(props)} />);
 }

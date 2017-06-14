@@ -1,18 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Comment from './Comment';
 
-const CommentList = props => (
-  <div>
-    {props.comments && (<ul>
-      {props.comments.map((comment, index) => (
-        <li key={index}>{comment}</li>
-      ))}
-    </ul>)}
-    <div className="message">
+const CommentList = (props) => {
+  let showMessageWhenEmpty;
+
+  if (props.comments && props.comments.length === 0) {
+    showMessageWhenEmpty = (<div className="message">
       <p className="nocomments">What are you waiting for? Write add a comment...!</p>
+    </div>);
+  }
+
+  return (
+    <div>
+      {props.comments && (props.comments.map((comment, index) =>
+        (<Comment key={index} comment={comment} />)
+      ))}
+      {showMessageWhenEmpty}
     </div>
-  </div>
-);
+  );
+};
 
 export default CommentList;
 

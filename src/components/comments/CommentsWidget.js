@@ -16,10 +16,12 @@ class CommentsWidget extends React.Component {
 
   render() {
     return (
-      <div>
-        <CommentList />
+      <div className="ui minimal comments">
+        <h3 className="ui dividing header">Comments</h3>
+        <CommentList comments={this.state.comments} />
         <InputComment onSubmit={this.addComment} />
-      </div>);
+      </div>
+    );
   }
 }
 export default CommentsWidget;

@@ -1,9 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import CommentList from '../../../src/components/comments/CommentList';
+import Comment from '../../../src/components/comments/Comment';
 
 const setup = (overridesProps) => {
-  const props = Object.assign({ comments: undefined }, overridesProps);
+  const props = Object.assign({
+    comments: undefined
+  }, overridesProps);
   const wrapper = shallow(<CommentList {...props} />);
 
   return wrapper;
@@ -15,14 +18,15 @@ describe('Tests for <CommentList/>', () => {
     expect(wrapper.find('.message .nocomments').text()).toBeDefined();
   });
 
-  it('should render when comments are undefined', () => {
-    const wrapper = setup();
-    expect(wrapper.find('.message .nocomments').text()).toBeDefined();
+  it('should hide the message when there are comments', () => {
+    const wrapper = setup({ comments: ['awesome', 'hello'] });
+    const messageDiv = wrapper.find('.message .nocomments');
+    expect(messageDiv.length).toEqual(0);
   });
 
   it('should render some comments', () => {
-    const testComments = ['joe, this app rocks', 'this is crazy', 'hey, this application is awesome'];
+    const testComments = ['this app rocks', 'this is crazy', 'hey, this application is awesome'];
     const wrapper = setup({ comments: testComments });
-    expect(wrapper.find('li').length).toEqual(3);
+    expect(wrapper.find(Comment).length).toEqual(testComments.length);
   });
 });
